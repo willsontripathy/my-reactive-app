@@ -1,0 +1,18 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let emp of employeeDetail">
+            <td>{{emp.ID}}</td>
+            <td>{{emp.name}}</td>
+            <td>{{emp.Gender}}</td>
+            <td><a [routerLink]="['emp',emp.ID]">copy</a></td>
+        </tr>
+    </tbody>
+</table>

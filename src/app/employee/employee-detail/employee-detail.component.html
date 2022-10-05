@@ -1,0 +1,9 @@
+<div [formGroup]="form">
+    {{form.value | json}}
+    ID: <input formControlName="id" />
+    Name: <input formControlName="name" />
+    Gender: <input formControlName="gender" />
+    <app-emp-two formControlName="chkdata"></app-emp-two>
+    <app-emp-two formControlName="chkdata1"></app-emp-two>
+    
+</div>

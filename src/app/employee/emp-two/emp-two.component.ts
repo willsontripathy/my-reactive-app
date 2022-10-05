@@ -31,14 +31,14 @@ export class EmpTwoComponent implements OnInit, ControlValueAccessor {
   }
   onEnableDisableControl(group: any, event: any){
     switch(group.value.name){
-      case 'checkbox1':
-        (event.target.checked) ? ((this.getformcontroltoDisable('checkbox2'))? (<AbstractControl>this.getformcontroltoDisable('checkbox2')).get('disabled')?.patchValue(true) : '',
-        (this.getformcontroltoDisable('checkbox3'))? (<AbstractControl>this.getformcontroltoDisable('checkbox3')).get('disabled')?.patchValue(true) : '') : this.formarray.controls.map(x => x.get('disabled')?.patchValue(false));
+      case 'FP Engagment':
+        (event.target.checked) ? ((this.getformcontroltoDisable('AE Engagement'))? (<AbstractControl>this.getformcontroltoDisable('AE Engagement')).get('disabled')?.patchValue(true) : '',
+        (this.getformcontroltoDisable('KC Engagment'))? (<AbstractControl>this.getformcontroltoDisable('KC Engagment')).get('disabled')?.patchValue(true) : '') : this.formarray.controls.map(x => x.get('disabled')?.patchValue(false));
         break;
-      case 'checkbox2':
-      case 'checkbox3':
-        (event.target.checked) ? (this.getformcontroltoDisable('checkbox1'))? (<AbstractControl>this.getformcontroltoDisable('checkbox1')).get('disabled')?.patchValue(true) : '' :
-              ((this.getformcontroltoDisable('checkbox2') && this.getformcontroltoDisable('checkbox2')?.value.selected) || (this.getformcontroltoDisable('checkbox3') && this.getformcontroltoDisable('checkbox3')?.value.selected)) ? (this.getformcontroltoDisable('checkbox1')) ? (<AbstractControl>this.getformcontroltoDisable('checkbox1')).get('disabled')?.patchValue(true) : '' : this.formarray.controls.map(x => x.get('disabled')?.patchValue(false));;
+      case 'AE Engagement':
+      case 'KC Engagment':
+        (event.target.checked) ? (this.getformcontroltoDisable('FP Engagment'))? (<AbstractControl>this.getformcontroltoDisable('FP Engagment')).get('disabled')?.patchValue(true) : '' :
+              ((this.getformcontroltoDisable('AE Engagement') && this.getformcontroltoDisable('AE Engagement')?.value.selected) || (this.getformcontroltoDisable('KC Engagment') && this.getformcontroltoDisable('KC Engagment')?.value.selected)) ? (this.getformcontroltoDisable('FP Engagment')) ? (<AbstractControl>this.getformcontroltoDisable('FP Engagment')).get('disabled')?.patchValue(true) : '' : this.formarray.controls.map(x => x.get('disabled')?.patchValue(false));;
       
     }
   }
