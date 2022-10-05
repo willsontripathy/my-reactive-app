@@ -1,0 +1,21 @@
+<!-- <div [formGroup]="form"> -->
+    <!-- <div>
+        {{form.value | json}}
+        <select formControlName="dd">
+            <option value="">Choose City</option>
+            <option *ngFor="let d of data1" [value]="d
+            ">
+                {{d}}
+            </option>
+        </select>
+    </div> -->
+    <div *ngFor="let group of formarray.controls; let i = index" [formGroup]="group">
+        <!-- <div *ngFor="let data of getdatas.controls; let i=index;"> -->
+            <!-- <div [formGroupName]="i"> -->
+                <!-- {{group.value | json}} -->
+                <input type="checkbox" [value]="group.value.value" [ngClass]="{'disablecon': group.value.disabled}"
+                 (change)="onChange(group, i, $event)" /> {{group.value.name}} {{group.value.value}}
+            <!-- </div> -->
+        <!-- </div> -->
+    </div>
+<!-- </div> -->

@@ -1,0 +1,5 @@
+<div [formGroup]="employeeForm">
+    {{employeeForm.value.dataTwo | json}}
+    <!-- <app-employee [formarray]="employeeForm.get('datas')"></app-employee> -->
+    <app-emp-two formControlName="dataTwo"></app-emp-two>
+</div>
