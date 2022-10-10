@@ -1,5 +1,5 @@
-<div *ngFor="let group of formarray.controls; let i = index" [formGroup]="group">
-    {{group.value | json}}
+<ng-container *ngFor="let group of formarray.controls; let i = index" [formGroup]="group">
+    <!-- {{group.value | json}} -->
     <ng-container *ngIf="!group.value.disabled;else discon">
         <input type="checkbox" formControlName="selected"
         (change)="onChangeCheckbox(group, i, $event)" /> {{group.value.name}}
@@ -8,4 +8,4 @@
     <ng-template #discon>
         <input type="checkbox" [checked]="group.value.selected" disabled /> {{group.value.name}}
     </ng-template>
-</div>
+</ng-container>

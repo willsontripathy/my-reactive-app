@@ -5,15 +5,56 @@ const app = express();
 app.use(cors())
 // app.length
 
+// const data = [
+//     {
+//         ID: 1,
+//         name: "Willson",
+//         Gender: 'Male',
+//         chkData: [
+//             { name: "FP Engagment", selected: true },
+//             { name: "AE Engagement", selected: false },
+//             { name: "KC Engagment", selected: false }
+//         ]
+//     },
+//     {
+//         ID: 2,
+//         name: "Nelson",
+//         Gender: 'Male',
+//         chkData: [
+//             { name: "FP Engagment", selected: false },
+//             { name: "AE Engagement", selected: false },
+//             { name: "KC Engagment", selected: true }
+//         ]
+//     },
+//     {
+//         ID: 3,
+//         name: "Ramakanta",
+//         Gender: 'Male',
+//         chkData: [
+//             { name: "FP Engagment", selected: false },
+//             { name: "AE Engagement", selected: true },
+//             { name: "KC Engagment", selected: true }
+//         ]
+//     },
+//     {
+//         ID: 4,
+//         name: "Jayanti",
+//         Gender: 'Female',
+//         chkData: [
+//             { name: "FP Engagment", selected: false },
+//             { name: "AE Engagement", selected: true },
+//             { name: "KC Engagment", selected: false }
+//         ]
+//     }
+// ];
+
 const data = [
     {
         ID: 1,
         name: "Willson",
         Gender: 'Male',
         chkData: [
-            { name: "FP Engagment", selected: true },
-            { name: "AE Engagement", selected: false },
-            { name: "KC Engagment", selected: false }
+            { name: "FP Engagment", selected: true }
         ]
     },
     {
@@ -21,8 +62,6 @@ const data = [
         name: "Nelson",
         Gender: 'Male',
         chkData: [
-            { name: "FP Engagment", selected: false },
-            { name: "AE Engagement", selected: false },
             { name: "KC Engagment", selected: true }
         ]
     },
@@ -31,7 +70,6 @@ const data = [
         name: "Ramakanta",
         Gender: 'Male',
         chkData: [
-            { name: "FP Engagment", selected: false },
             { name: "AE Engagement", selected: true },
             { name: "KC Engagment", selected: true }
         ]
@@ -40,10 +78,8 @@ const data = [
         ID: 4,
         name: "Jayanti",
         Gender: 'Female',
-        chkData: [
-            { name: "FP Engagment", selected: false },
-            { name: "AE Engagement", selected: true },
-            { name: "KC Engagment", selected: false }
+        chkData: [  
+            { name: "AE Engagement", selected: true }
         ]
     }
 ];
@@ -65,9 +101,9 @@ app.get('/employee/:id', (req, res, next) => {
 });
 
 app.get('/checkdata', (req, res, next) => {
-    setTimeout((() => {
+    // setTimeout((() => {
         res.send(checkboxesData);
-    }), 5000);
+    // }), 5000);
 });
 
 app.listen(3000, () => {
