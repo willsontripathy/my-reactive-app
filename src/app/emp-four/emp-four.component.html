@@ -1,6 +1,6 @@
-<div [formGroup]="parentForm">
+<div >
     <label>Employee Type</label>
-    <select formControlName="empType" placeholder="Select price">
+    <select [formControl]="empType" placeholder="Select price">
         <option [ngValue]="null" disabled>Select Employee Type</option>
         <option *ngFor="let emp of employeeType" [value]="emp.id">
             {{emp.name}}

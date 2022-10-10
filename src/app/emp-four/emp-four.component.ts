@@ -15,21 +15,24 @@ import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from 
 })
 export class EmpFourComponent implements OnInit, ControlValueAccessor {
   employeeType: any[] = [
-    {id:1, name:'Permanet Employee'},
-    {id:2, name:'Part Time Employee'},
-    {id:3, name:'Onsite Employee'},
-    {id:4, name:'Sales Employee'}
+    { id: 1, name: 'Permanet Employee' },
+    { id: 2, name: 'Part Time Employee' },
+    { id: 3, name: 'Onsite Employee' },
+    { id: 4, name: 'Sales Employee' }
   ]
-  @Input()
-  parentForm!: FormGroup;
+  // public readonly empType = new FormControl(null);
+  public empType: FormControl = new FormControl(null);
   public onChange!: (value: any) => void
 
   constructor() { }
-  
+
   ngOnInit(): void {
+    this.empType.valueChanges.subscribe(val => this.onChange(val))
   }
-  writeValue(obj: any): void {
-   this.parentForm.get('empType')?.setValue(obj)
+  writeValue(value: any): void {
+    if (value) {
+      this.empType.setValue(value);
+    }
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
