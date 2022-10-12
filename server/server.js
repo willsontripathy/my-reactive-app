@@ -70,8 +70,8 @@ const data = [
         name: "Ramakanta",
         Gender: 'Male',
         chkData: [
-            { name: "AE Engagement", selected: true },
-            { name: "KC Engagment", selected: true }
+            { id: 1,name: "AE Engagement", selected: true },
+            { id: 2,name: "KC Engagment", selected: true }
         ]
     },
     {
@@ -105,6 +105,9 @@ app.get('/checkdata', (req, res, next) => {
         res.send(checkboxesData);
     // }), 5000);
 });
+app.get('/checkdata/:id', (req, res, next) => {
+    res.json({data: req.params.id});
+})
 
 app.listen(3000, () => {
     console.log(`Server is listening on port 3000`);

@@ -16,4 +16,7 @@ export class AppService {
     getCheckData(){
         return this.http.get('http://localhost:3000/checkdata');
     }
+    getCheckDataByID(id: number){
+        return this.http.get('http://localhost:3000/checkdata/'+ id);
+    }
 }

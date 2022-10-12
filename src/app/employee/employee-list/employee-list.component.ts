@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { of } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { combineLatest, forkJoin, of, throwError } from 'rxjs';
+import { catchError, concatMap, filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { AppService } from 'src/app/service/app.service';
 
 @Component({
@@ -13,13 +13,26 @@ export class EmployeeListComponent implements OnInit {
   constructor(private svc: AppService) { }
 
   ngOnInit(): void {
-    this.svc.getEmplpyees().subscribe((data: any[]) => {
-      this.employeeDetail = data;
-    })
-    of(null,1,2,3).pipe(filter(x => x != null)).subscribe(d => console.log(d))
+    this.svc.getEmplpyees().subscribe(data => this.employeeDetail = data);
+    // this.svc.getEmplpyeebyId(3).pipe(
+    //   tap((res) => console.log(res)),
+    //   concatMap((x: any) => {
+    //     // array of observables
+    //     const members$ = x.chkData.map((y:any) => {
+    //       console.log(y)
+    //       return this.svc.getCheckDataByID(y.id);
+    //     });
+    
+    //     // use forkJoin to return single observable that returns array of results
+    //     return forkJoin(members$)
+    //   })
+    // ).subscribe((res: any) => {
+    //   console.log(res)
+    // })
+    of(null, 1, 2, 3).pipe(filter(x => x != null)).subscribe(d => console.log(d))
 
   }
-  onClick(event: any, id: number){
+  onClick(event: any, id: number) {
     event.stopPropagation();
   }
 }

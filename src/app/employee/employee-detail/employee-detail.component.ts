@@ -62,22 +62,21 @@ export class EmployeeDetailComponent implements OnInit {
     // })
   }
   getFormattedFormArray(res: any[], dbdata: any[]): any {
-    const formatedData = [...dbdata.filter(d => res.map(x => x.name).includes(d.name)).map(x => ({ ...x, selected: true })),
-    ...dbdata.filter(d => !res.map(x => x.name).includes(d.name)).map(x => ({ ...x, selected: false }))]
-      .sort((a, b) => dbdata.map(x => x.name).indexOf(a.name) - dbdata.map(x => x.name).indexOf(b.name));
-
-    const selectedEng = formatedData.find(x => x.selected).name;
+    // const formatedData = [...dbdata.filter(d => res.map(x => x.name).includes(d.name)).map(x => ({ ...x, selected: true, disabled: true })),
+    //                       ...dbdata.filter(d => !res.map(x => x.name).includes(d.name)).map(x => ({ ...x, selected: false, disabled: false }))]
+    const data = dbdata.map(db => (res.find(x => x.name === db.name)) ? ({...db, selected: true, disabled: true})
+         : ({...db, selected: false, disabled: false}))
+    const selectedEng = data.filter((x:any) => x.selected);
     let result;
-    switch (selectedEng) {
-      case 'FP Engagment':
-        result = formatedData.map(x => (x.name === 'FP Engagment') ? { ...x, disabled: false } : { ...x, disabled: true });
-        break;
-      case 'AE Engagement':
-      case 'KC Engagment':
-        result = formatedData.map(x => (x.name === 'AE Engagement' || x.name === 'KC Engagment') ? x = { ...x, disabled: false } : x = { ...x, disabled: true });
-        break;
+    if(selectedEng.length && (selectedEng.some((x: any) => x.name === 'AE Engagement' || x.name == 'KC Engagment'))){
+      result = data.map((x: any) => (x.name === 'FP Engagment') ? ({...x, disabled: true}): ({...x}))
+    } else if(selectedEng.length && selectedEng.some((X: any) => X.name === 'FP Engagment')){
+      result = data.map((x: any) => ({...x, disabled: true}))
+    } else {
+      result = data.map((x: any) => ({...x, disabled: false}));
     }
+  
     console.log(result);
-    return result;
+    return result?.sort((a, b) => dbdata.map(x => x.name).indexOf(a.name) - dbdata.map(x => x.name).indexOf(b.name));
   }
 }

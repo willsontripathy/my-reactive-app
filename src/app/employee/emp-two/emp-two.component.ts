@@ -56,7 +56,7 @@ export class EmpTwoComponent implements OnInit, ControlValueAccessor {
     }
   }
   registerOnChange(fn: any): void {
-    alert('okk');
+    // alert('okk');
     this.formarray.valueChanges.subscribe(fn );
     // this.onChange = fn;
   }
