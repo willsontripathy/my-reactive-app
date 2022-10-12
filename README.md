@@ -25,3 +25,21 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+const data = engagementModules.map(engagementModules => (licenseInfo.find(x => x.productId === engagementModules.productId)) ? 
+             ({...engagementModules, selected: true, disabled: true, name: this.getModuleName(engagementModules.productId)})
+         : ({...engagementModules, selected: false, disabled: false, name: this.getModuleName(engagementModules.productId)}))
+    const selectedEng = data.filter((x:any) => x.selected);
+    let result;
+    if(selectedEng.length && (selectedEng.some((x: any) => x.productId === WKAuditModuleType.AxcessEngagement 
+        ||   x.productId == WKAuditModuleType.AxcessKC))){
+      result = data.map((x: any) => (x.productId === WKAuditModuleType.FinancialPrep) ? 
+      ({...x, disabled: true}): ({...x}))
+    } else if(selectedEng.length && selectedEng.some((X: any) => X.productId === WKAuditModuleType.FinancialPrep)){
+      result = data.map((x: any) => ({...x, disabled: true}))
+    } else {
+      result = data.map((x: any) => ({...x, disabled: false}));
+    }
+  
+    console.log(result);
+    return result?.sort((a, b) => dbdata.map(x => x.productId).indexOf(a.productId) - dbdata.map(x => x.productId).indexOf(b.productId));

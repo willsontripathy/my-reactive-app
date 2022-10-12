@@ -14,6 +14,8 @@ import { AbilityModule } from '@casl/angular';
 import { Ability } from '@casl/ability';
 import { AppAbility } from './app-ability';
 import { EmpFourComponent } from './emp-four/emp-four.component';
+import { NgxsModule } from '@ngxs/store';
+import { EmployeesState } from './store/employees.state';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { EmpFourComponent } from './emp-four/emp-four.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AbilityModule
+    AbilityModule,
+    NgxsModule.forRoot([EmployeesState])
   ],
   providers: [
     { provide: Ability, useValue: new Ability() },

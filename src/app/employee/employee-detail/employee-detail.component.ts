@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, delay } from 'rxjs';
+import { combineLatest, concatMap, delay, forkJoin, map } from 'rxjs';
 import { AppService } from 'src/app/service/app.service';
+import { Store } from '@ngxs/store';
+import { GetCheckDataByIdAction } from 'src/app/store/employee.actions';
 
 @Component({
   selector: 'app-employee-detail',
@@ -11,20 +13,31 @@ import { AppService } from 'src/app/service/app.service';
 })
 export class EmployeeDetailComponent implements OnInit {
   formInitStatus: boolean = false;
-  constructor(private svc: AppService, private ar: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private svc: AppService, private ar: ActivatedRoute, private fb: FormBuilder, 
+    private store: Store) { }
 
   form!: FormGroup;
   get getName() {
     return this.form?.get('name');
   }
   dbdata: any[] = [
-    { name: "FP Engagment" },
+    { name: "FP Engagment", },
     { name: "AE Engagement" },
     { name: "KC Engagment" }
   ]
   ngOnInit(): void {
     const par = this.ar.snapshot.paramMap?.get('id');
     const id = par ? +par : 0;
+
+    this.svc.getEmplpyeebyId(id)
+    .pipe(
+      concatMap((x: any) => {
+        const chkdata$ = x.chkData.map((y: any) => {
+          return this.store.dispatch(new GetCheckDataByIdAction(y.id))
+        });
+        return forkJoin(chkdata$)
+      })
+    ).subscribe(val => console.log(val))
 
     combineLatest([this.svc.getEmplpyeebyId(id), this.svc.getCheckData()])
       .subscribe((res: any[]) => {
