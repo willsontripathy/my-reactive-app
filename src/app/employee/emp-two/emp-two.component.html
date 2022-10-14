@@ -2,10 +2,14 @@
     <!-- {{group.value | json}} -->
     <ng-container *ngIf="!group.value.disabled;else discon">
         <input type="checkbox" formControlName="selected"
-        (change)="onChangeCheckbox(group, i, $event)" /> {{group.value.name}}
+         /> {{group.value.name}}
     </ng-container>
     
     <ng-template #discon>
         <input type="checkbox" [checked]="group.value.selected" disabled /> {{group.value.name}}
     </ng-template>
+
+    <!-- uncomment if using pure reactve form -->
+    <!-- <input type="checkbox" formControlName="selected"
+        (change)="onChangeCheckbox(group, i, $event)" /> {{group.value.name}} -->
 </ng-container>

@@ -16,6 +16,10 @@ import { AppAbility } from './app-ability';
 import { EmpFourComponent } from './emp-four/emp-four.component';
 import { NgxsModule } from '@ngxs/store';
 import { EmployeesState } from './store/employees.state';
+import { EmpInputComponent } from './employee/emp-input/emp-input.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,8 @@ import { EmployeesState } from './store/employees.state';
     EmployeeDetailComponent,
     EmployeeListComponent,
     EmpThreeComponent,
-    EmpFourComponent
+    EmpFourComponent,
+    EmpInputComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +38,10 @@ import { EmployeesState } from './store/employees.state';
     ReactiveFormsModule,
     HttpClientModule,
     AbilityModule,
-    NgxsModule.forRoot([EmployeesState])
+    NgxsModule.forRoot([EmployeesState]),
+    BrowserAnimationsModule,
+    MatChipsModule,
+    MatCardModule
   ],
   providers: [
     { provide: Ability, useValue: new Ability() },

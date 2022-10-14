@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { WKAuditModuleType } from '../license-type';
 
 @Component({
   selector: 'app-emp-two',
@@ -25,30 +26,63 @@ export class EmpTwoComponent implements OnInit, ControlValueAccessor {
     this.onEnableDisableControl(group, event);
     // this.onChange(this.formarray.value);
   }
-  getformcontroltoDisable(name: string): AbstractControl | null {
-    return (this.formarray.controls.findIndex(x => x.value.name === name) !== -1) ?
-      this.formarray.at(this.formarray.controls.findIndex(x => x.value.name === name)) : null;
+  getformcontroltoDisable(productId: number): AbstractControl | null {
+    return (this.formarray.controls.findIndex(x => x.value.productId === productId) !== -1) ?
+      this.formarray.at(this.formarray.controls.findIndex(x => x.value.productId === productId)) : null;
   }
   onEnableDisableControl(group: any, event: any) {
-    switch (group.value.name) {
-      case 'FP Engagment':
-        (event.target.checked) ? ((this.getformcontroltoDisable('AE Engagement')) ? (<AbstractControl>this.getformcontroltoDisable('AE Engagement')).get('disabled')?.patchValue(true) : '',
-          (this.getformcontroltoDisable('KC Engagment')) ? (<AbstractControl>this.getformcontroltoDisable('KC Engagment')).get('disabled')?.patchValue(true) : '') : this.formarray.controls.map(x => x.get('disabled')?.patchValue(false));
+    switch (group.value.productId) {
+      case WKAuditModuleType.FinancialPrep:
+        (event.target.checked) ? ((this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)) ?
+         (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)).get('disabled')?.patchValue(true) : '',
+          (this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)) ? 
+          (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)).get('disabled')?.patchValue(true) : '') : 
+          this.formarray.controls.map(x => x.get('disabled')?.patchValue(false));
         break;
-      case 'AE Engagement':
-      case 'KC Engagment':
-        (event.target.checked) ? (this.getformcontroltoDisable('FP Engagment')) ? (<AbstractControl>this.getformcontroltoDisable('FP Engagment')).get('disabled')?.patchValue(true) : '' :
-          ((this.getformcontroltoDisable('AE Engagement') && this.getformcontroltoDisable('AE Engagement')?.value.selected) || (this.getformcontroltoDisable('KC Engagment') && this.getformcontroltoDisable('KC Engagment')?.value.selected)) ? (this.getformcontroltoDisable('FP Engagment')) ? (<AbstractControl>this.getformcontroltoDisable('FP Engagment')).get('disabled')?.patchValue(true) : '' : this.formarray.controls.map(x => x.get('disabled')?.patchValue(false));;
+      case WKAuditModuleType.AxcessEngagement:
+      case WKAuditModuleType.AxcessKC:
+        (event.target.checked) ? (this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)) ? (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)).get('disabled')?.patchValue(true) : '' :
+          ((this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement) && this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)?.value.selected) || 
+          (this.getformcontroltoDisable(WKAuditModuleType.AxcessKC) && 
+          this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)?.value.selected)) ? 
+          (this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)) ? 
+          (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)).get('disabled')?.patchValue(true) : ''
+           : this.formarray.controls.map(x => x.get('disabled')?.patchValue(false));;
 
     }
   }
+  // Pure Reactive form
+  // onEnableDisableControl(group: any, event: any) {
+  //   switch (group.value.productId) {
+  //     case WKAuditModuleType.FinancialPrep:
+  //       (event.target.checked) ? ((this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)) ?
+  //        (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)).get('selected')?.disable() : '',
+  //         (this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)) ? 
+  //         (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)).get('selected')?.disable() : '') : 
+  //         this.formarray.controls.map(x => x.get('selected')?.enable());
+  //       break;
+  //     case WKAuditModuleType.AxcessEngagement:
+  //     case WKAuditModuleType.AxcessKC:
+  //       (event.target.checked) ? (this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)) ? 
+  //       (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)).get('selected')?.disable() : '' :
+  //         ((this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement) && 
+  //         this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)?.value.selected) || 
+  //         (this.getformcontroltoDisable(WKAuditModuleType.AxcessKC) && 
+  //         this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)?.value.selected)) ? 
+  //         (this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)) ? 
+  //         (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)).get('selected')?.disable() : ''
+  //          : this.formarray.controls.map(x => x.get('selected')?.enable());;
+
+  //   }
+  // }
   writeValue(obj: any): void {
     if (obj) {
       this.formarray = new FormArray(
         obj.map((x: any) => {
           return new FormGroup({
+            productId: new FormControl(x.productId),
             name: new FormControl(x.name),
-            selected: new FormControl(x.selected),
+            selected: new FormControl( x.selected),
             disabled: new FormControl(x.disabled)
           });
         })

@@ -54,7 +54,7 @@ const data = [
         name: "Willson",
         Gender: 'Male',
         chkData: [
-            { name: "FP Engagment", selected: true }
+            { productId: 67, name: "FP Engagment", selected: true }
         ]
     },
     {
@@ -62,7 +62,7 @@ const data = [
         name: "Nelson",
         Gender: 'Male',
         chkData: [
-            { name: "KC Engagment", selected: true }
+            { productId: 76, name: "KC Engagment", selected: true }
         ]
     },
     {
@@ -70,8 +70,8 @@ const data = [
         name: "Ramakanta",
         Gender: 'Male',
         chkData: [
-            { id: 1,name: "AE Engagement", selected: true },
-            { id: 2,name: "KC Engagment", selected: true }
+            { productId:79, name: "AE Engagement", selected: true },
+            { productId: 76,name: "KC Engagment", selected: true }
         ]
     },
     {
@@ -79,14 +79,14 @@ const data = [
         name: "Jayanti",
         Gender: 'Female',
         chkData: [  
-            { name: "AE Engagement", selected: true }
+            { productId: 79, name: "AE Engagement", selected: true }
         ]
     }
 ];
 const checkboxesData = [
-    { name: "checkbox1", selected: false },
-    { name: "checkbox2", selected: false },
-    { name: "checkbox3", selected: false }
+    {productId: 67, name: "FP Engagment", selected: false },
+    {productId: 79, name: "AE Engagement", selected: false },
+    {productId: 76, name: "KC Engagment", selected: false }
 ]
 
 app.get('/employee', (req, res, next) => {

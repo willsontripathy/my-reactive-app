@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Action, State, StateContext } from '@ngxs/store';
-import { tap } from 'rxjs';
+import { Action, Select, Selector, State, StateContext } from '@ngxs/store';
+import { map, tap } from 'rxjs';
 import { AppService } from '../service/app.service';
 import { GetCheckDataByIdAction, GetEmployeesAction, GetEmplyeeByIdAction } from './employee.actions';
 export interface EmployeesModel {
@@ -18,15 +18,26 @@ export interface EmployeesModel {
   @Injectable()
   export class EmployeesState {
     constructor(private svc: AppService){}
+
+    @Selector()
+      static selectEmployees(state: EmployeesModel) {
+        return state.employees
+      };
+
     @Action(GetEmployeesAction)
     employees(ctx: StateContext<any>, action: GetEmplyeeByIdAction) {
         return this.svc.getEmplpyees().pipe(
           tap(employees => {
+            console.log(employees)
             const state = ctx.getState();
             ctx.setState({
               ...state,
               employees: [...state.employees, employees]
-            });
+            })
+          }),
+          map((res: any[]) => {
+            console.log(res);
+            return res;
           })
         );
       }

@@ -1,12 +1,15 @@
 <ng-container *ngIf="formInitStatus">
     <div [formGroup]="form">
-        {{form.value | json}}
+        {{form.value.chkdata | json}}
+        {{form.value.gender}}
         ID: <input formControlName="id" />
         Name: <input formControlName="name" />
-        Gender: <input formControlName="gender" />
-        <app-emp-two formControlName="chkdata"></app-emp-two>
-        <app-emp-four  [formControl]="form.get('empType')"></app-emp-four>
-        <!-- <app-emp-two formControlName="chkdata1"></app-emp-two> -->
+        <!-- Gender: <input formControlName="gender" /> -->
+        Gender: <app-emp-input [formControl]="form.get('gender')" [controlValue]="form.get('gender').value" [isdisabled]="true"></app-emp-input>
+        <br>
+        <app-emp-two formControlName="chkdata"></app-emp-two><br>
+        <!-- <app-emp-four  [formControl]="form.get('empType')"></app-emp-four> -->
+        <app-emp-two formControlName="chkdata1"></app-emp-two>
 
     </div>
 </ng-container>
