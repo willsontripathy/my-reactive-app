@@ -32,7 +32,7 @@ export class EmployeeListComponent implements OnInit {
     // ).subscribe((res: any) => {
     //   console.log(res)
     // })
-    of(null, 1, 2, 3).pipe(filter(x => x != null)).subscribe(d => console.log(d))
+    // of(null, 1, 2, 3).pipe(filter(x => x != null)).subscribe(d => console.log(d))
 
   }
   onClick(event: any, id: number) {

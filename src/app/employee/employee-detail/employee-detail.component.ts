@@ -41,7 +41,9 @@ export class EmployeeDetailComponent implements OnInit {
         });
         return forkJoin(chkdata$)
       })
-    ).subscribe(val => console.log(val))
+    ).subscribe(
+      // val => console.log(val)
+      )
 
     combineLatest([this.svc.getEmplpyeebyId(id), this.svc.getCheckData()])
       .subscribe((res: any[]) => {

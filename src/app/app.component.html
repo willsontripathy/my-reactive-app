@@ -3,4 +3,14 @@
     <app-employee [formarray]="employeeForm.get('datas')"></app-employee>
     <app-emp-two formControlName="dataTwo"></app-emp-two>
 </div> -->
+<ag-grid-angular
+#agGrid
+	style="width: 500px; height: 193px;"
+	class="ag-theme-alpine"
+	[rowData]="rowData"
+	[columnDefs]="columnDefs"
+	(cellValueChanged)="onCellValueChanged($event)"
+	>
+</ag-grid-angular>
+<button (click)="ongo()">Go to next cell</button>
 <router-outlet></router-outlet>

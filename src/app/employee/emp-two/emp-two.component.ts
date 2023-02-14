@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WKAuditModuleType } from '../license-type';
 
@@ -14,17 +14,27 @@ import { WKAuditModuleType } from '../license-type';
     },
   ]
 })
-export class EmpTwoComponent implements OnInit, ControlValueAccessor {
+export class EmpTwoComponent implements  ControlValueAccessor {
   formarray!: FormArray;
   public onChange!: (value: any) => void;
+  xyz: boolean = false;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
   onChangeCheckbox(group: any, i: number, event: any) {
+    let w =[1];
+    let y = 1;
+    let z = 2;
+    let x = false;
+    if(w.length > 0){
+      this.xyz = y>z;
+    }
     this.onEnableDisableControl(group, event);
-    // this.onChange(this.formarray.value);
+  }
+  abcd(y: number,z: number): boolean {
+    if(y >= z){
+      return true;
+    } else {
+      return false;
+    }
   }
   getformcontroltoDisable(productId: number): AbstractControl | null {
     return (this.formarray.controls.findIndex(x => x.value.productId === productId) !== -1) ?
@@ -33,48 +43,30 @@ export class EmpTwoComponent implements OnInit, ControlValueAccessor {
   onEnableDisableControl(group: any, event: any) {
     switch (group.value.productId) {
       case WKAuditModuleType.FinancialPrep:
-        (event.target.checked) ? ((this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)) ?
-         (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)).get('disabled')?.patchValue(true) : '',
-          (this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)) ? 
-          (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)).get('disabled')?.patchValue(true) : '') : 
-          this.formarray.controls.map(x => x.get('disabled')?.patchValue(false));
+        if(event.target.checked){
+          this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)?.get('disabled')?.patchValue(true);
+          this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)?.get('disabled')?.patchValue(true);
+          this.getformcontroltoDisable(WKAuditModuleType.KnowledgeCoachPCR)?.get('disabled')?.patchValue(true);
+        } else {
+          this.formarray.controls.forEach(x => x.get('disabled')?.patchValue(false));
+        }
         break;
       case WKAuditModuleType.AxcessEngagement:
       case WKAuditModuleType.AxcessKC:
-        (event.target.checked) ? (this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)) ? (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)).get('disabled')?.patchValue(true) : '' :
-          ((this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement) && this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)?.value.selected) || 
-          (this.getformcontroltoDisable(WKAuditModuleType.AxcessKC) && 
-          this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)?.value.selected)) ? 
-          (this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)) ? 
-          (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)).get('disabled')?.patchValue(true) : ''
-           : this.formarray.controls.map(x => x.get('disabled')?.patchValue(false));;
-
+        if(event.target.checked){
+          this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)?.get('disabled')?.patchValue(true)
+        }else{
+          this.disableFpBasedOnButton(this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement), this.getformcontroltoDisable(WKAuditModuleType.AxcessKC))
+        }
     }
   }
-  // Pure Reactive form
-  // onEnableDisableControl(group: any, event: any) {
-  //   switch (group.value.productId) {
-  //     case WKAuditModuleType.FinancialPrep:
-  //       (event.target.checked) ? ((this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)) ?
-  //        (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)).get('selected')?.disable() : '',
-  //         (this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)) ? 
-  //         (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)).get('selected')?.disable() : '') : 
-  //         this.formarray.controls.map(x => x.get('selected')?.enable());
-  //       break;
-  //     case WKAuditModuleType.AxcessEngagement:
-  //     case WKAuditModuleType.AxcessKC:
-  //       (event.target.checked) ? (this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)) ? 
-  //       (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)).get('selected')?.disable() : '' :
-  //         ((this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement) && 
-  //         this.getformcontroltoDisable(WKAuditModuleType.AxcessEngagement)?.value.selected) || 
-  //         (this.getformcontroltoDisable(WKAuditModuleType.AxcessKC) && 
-  //         this.getformcontroltoDisable(WKAuditModuleType.AxcessKC)?.value.selected)) ? 
-  //         (this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)) ? 
-  //         (<AbstractControl>this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)).get('selected')?.disable() : ''
-  //          : this.formarray.controls.map(x => x.get('selected')?.enable());;
-
-  //   }
-  // }
+  disableFpBasedOnButton(ae: AbstractControl | null, kc: AbstractControl | null){
+    if((ae && ae.value.selected) || (kc && kc.value.selected)){
+      this.getformcontroltoDisable(WKAuditModuleType.FinancialPrep)?.get('disabled')?.patchValue(true)
+    }else {
+      this.formarray.controls.forEach(x => x.get('disabled')?.patchValue(false));
+    }
+  }
   writeValue(obj: any): void {
     if (obj) {
       this.formarray = new FormArray(
@@ -90,15 +82,9 @@ export class EmpTwoComponent implements OnInit, ControlValueAccessor {
     }
   }
   registerOnChange(fn: any): void {
-    // alert('okk');
     this.formarray.valueChanges.subscribe(fn );
-    // this.onChange = fn;
   }
-  registerOnTouched(fn: any): void {
-    //throw new Error('Method not implemented.');
-  }
-  setDisabledState?(isDisabled: boolean): void {
-    //throw new Error('Method not implemented.');
-  }
+  registerOnTouched(fn: any): void {  }
+  setDisabledState?(isDisabled: boolean): void {  }
 
 }

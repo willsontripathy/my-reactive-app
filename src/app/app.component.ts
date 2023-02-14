@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { CellPosition, ColDef, NavigateToNextCellParams } from '@ag-grid-community/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AgGridAngular } from 'ag-grid-angular';
 import { AppAbility } from './app-ability';
+import { CustomHeader } from './cust-header.componet';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +12,7 @@ import { AppAbility } from './app-ability';
 })
 export class AppComponent implements OnInit {
   title = 'my-reactive-app';
+  @ViewChild('agGrid') agGrid!: AgGridAngular;
   checkboxesData: any[] = [
     {name: "checkbox1", selected: false, disabled: false},
     {name: "checkbox2", selected: false, disabled: false},
@@ -30,6 +34,22 @@ export class AppComponent implements OnInit {
     {id: 3, name: 'Kuna', gender: 'male', emp: ['Gudu', 'Jaya']},
     {id: 4, name: 'Jaya', gender: 'female', emp: ''}
   ]
+  columnDefs: ColDef[] = [
+    { headerName: 'Make', field: 'make' },
+    { headerName: 'Model', field: 'model' },
+    {
+      headerName: 'Price', field: 'price', editable: false,
+      headerComponent: CustomHeader
+        
+      
+    }
+  ];
+
+	rowData = [
+		{ make: 'Toyota', model: 'Celica', price: 35000 },
+		{ make: 'Ford', model: 'Mondeo', price: 32000 },
+		{ make: 'Porsche', model: 'Boxster', price: 72000 }
+	];
   
   constructor(private fb: FormBuilder, private app: AppAbility){
     this.app.add();
@@ -45,7 +65,7 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this.employeeForm.get('dataTwo')?.setValue(this.checkboxesData);
-    this.data.map(x => {
+    this.data.forEach(x => {
       const group: FormGroup = this.fb.group({
         name: x.name,
         value: x.value,
@@ -54,5 +74,21 @@ export class AppComponent implements OnInit {
       });
       (this.employeeForm.get('datas') as FormArray).push(group);
     })
+    
   }
+  drop(){
+    alert('okk');
+  }
+  ongo(){
+    // this.agGrid.columnApi.co
+    const firstCol = this.agGrid.columnApi.getAllDisplayedColumns()[2];
+    this.agGrid.api.ensureColumnVisible(firstCol );
+    this.agGrid.api.setFocusedCell(0, firstCol);  
+  }
+  onCellValueChanged(event: any){
+    const firstCol = this.agGrid.columnApi.getAllDisplayedColumns()[2];
+    this.agGrid.api.ensureColumnVisible(firstCol );
+    this.agGrid.api.setFocusedCell(event.rowIndex+1, firstCol);  
+  }
+
 }

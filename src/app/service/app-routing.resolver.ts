@@ -14,8 +14,11 @@ export class AppRouteResolver implements Resolve<any> {
     @Select(EmployeesState.selectEmployees) selectEmployee$!: Observable<any[]>
     constructor(private store: Store){}
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return this.store.dispatch(new GetEmployeesAction()).pipe(
-            map(() => this.store.selectSnapshot(EmployeesState.selectEmployees))
-          );
+        const data = this.store.selectSnapshot(EmployeesState.selectEmployees);
+        if(!data || !data.length){
+           return this.store.dispatch(new GetEmployeesAction());
+        }else {
+            return data;
+        }
     }
 }

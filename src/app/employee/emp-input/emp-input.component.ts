@@ -21,12 +21,12 @@ export class EmpInputComponent implements OnInit, AfterViewInit, ControlValueAcc
   public onChange!: (value: any) => void;
   constructor(private _renderer: Renderer2, private _elementRef: ElementRef) { }
   ngAfterViewInit(): void {
-    console.log(this._elementRef.nativeElement.parentElement.querySelector('.par-1'))
-    this._renderer.setStyle(this._elementRef.nativeElement.parentElement.querySelector('.mat-card-title'), 'background-color', 'red')
+    // console.log(this._elementRef.nativeElement.parentElement.querySelector('.par-1'))
+    // this._renderer.setStyle(this._elementRef.nativeElement.parentElement.querySelector('.mat-card-title'), 'background-color', 'red')
   }
   ngOnInit(): void {
     this.employeeControl = new FormControl({value: this.controlValue, disabled: this.isdisabled})
-    console.log(this.employeeControl.value);
+    // console.log(this.employeeControl.value);
     
   }
   writeValue(obj: any): void {

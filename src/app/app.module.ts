@@ -20,6 +20,9 @@ import { EmpInputComponent } from './employee/emp-input/emp-input.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatCardModule} from '@angular/material/card';
+import { AgGridModule } from 'ag-grid-angular';
+import { CustomHeader } from './cust-header.componet';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import {MatCardModule} from '@angular/material/card';
     EmployeeListComponent,
     EmpThreeComponent,
     EmpFourComponent,
-    EmpInputComponent
+    EmpInputComponent,
+    CustomHeader
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,8 @@ import {MatCardModule} from '@angular/material/card';
     NgxsModule.forRoot([EmployeesState]),
     BrowserAnimationsModule,
     MatChipsModule,
-    MatCardModule
+    MatCardModule,
+    AgGridModule
   ],
   providers: [
     { provide: Ability, useValue: new Ability() },
