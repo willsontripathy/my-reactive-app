@@ -35,10 +35,10 @@ export class AppComponent implements OnInit {
     {id: 4, name: 'Jaya', gender: 'female', emp: ''}
   ]
   columnDefs: ColDef[] = [
-    { headerName: 'Make', field: 'make' },
+    { headerName: 'Make', field: 'make', checkboxSelection: true },
     { headerName: 'Model', field: 'model' },
     {
-      headerName: 'Price', field: 'price', editable: false,
+      headerName: 'Price', field: 'price', editable: false, checkboxSelection:false,
       headerComponent: CustomHeader
         
       
