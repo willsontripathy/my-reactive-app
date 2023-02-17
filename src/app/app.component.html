@@ -10,7 +10,10 @@
 	[rowData]="rowData"
 	[columnDefs]="columnDefs"
 	(cellValueChanged)="onCellValueChanged($event)"
+	[navigateToNextCell]="onGo"
+	[singleClickEdit]="true"
+	(rowEditingStarted)="onRowEditingStarted($event)"
 	>
 </ag-grid-angular>
-<button (click)="ongo()">Go to next cell</button>
+<!-- <button (click)="ongo()">Go to next cell</button> -->
 <router-outlet></router-outlet>

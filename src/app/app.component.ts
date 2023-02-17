@@ -1,4 +1,5 @@
 import { CellClassParams, CellPosition, ColDef, NavigateToNextCellParams } from '@ag-grid-community/core';
+import { StartEditingCellParams } from '@ag-grid-community/core/dist/cjs/es5/gridApi';
 import { registerLocaleData } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -14,6 +15,7 @@ import { CustomHeader } from './cust-header.componet';
 })
 export class AppComponent implements OnInit {
   title = 'my-reactive-app';
+  public onGo!:any;
   
   @ViewChild('agGrid') agGrid!: AgGridAngular;
   checkboxesData: any[] = [
@@ -71,8 +73,42 @@ export class AppComponent implements OnInit {
       return x;
     })
     console.log(result);
+    this.onGo = function (params: any){
+      // this.agGrid.columnApi.co
+      var previousCell = params.previousCellPosition;
+        var suggestedNextCell = params.nextCellPosition
+        ;
+        const firstCol = params.columnApi.getAllDisplayedColumns()[2];
+        switch (params.key) {
+          case "ArrowDown":
+            let nextRowIndex = suggestedNextCell.rowIndex;
+            if (nextRowIndex < 0) {
+             // return null;
+            } else {
+              params.api.startEditingCell({rowIndex:nextRowIndex,colKey:firstCol})
+              
+            }
+            break;
+          case 'ArrowUp':
+             nextRowIndex = previousCell.rowIndex + 1;
+            var renderedRowCount = this.agGrid.api.getModel().getRowCount();
+            if (nextRowIndex >= renderedRowCount) {
+             // return null;
+            } else {
+              // return {
+              //   rowIndex: nextRowIndex,
+              //   column: previousCell.column,
+              //   floating: previousCell.floating
+              // };
+            }
+            break;
+          default:
+            throw "this will never happen, navigation is always on of the 4 keys above";
+        }
+    }
   }
   ngOnInit(): void {
+  
     this.employeeForm.get('dataTwo')?.setValue(this.checkboxesData);
     this.data.forEach(x => {
       const group: FormGroup = this.fb.group({
@@ -83,24 +119,27 @@ export class AppComponent implements OnInit {
       });
       (this.employeeForm.get('datas') as FormArray).push(group);
     })
-    const r = RegExp(/^[0-9]+(,[0-9]+)*,?/);
-    const res = r.exec('99,999')
-    const str: string = '999999999999999999999999999';
-    console.log(str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"))
+    const r = RegExp(/(\d+)(\d{3})/);
+    // const res = r.exec('99,999')
+    let str: string = '-999999';
+    while (r.test(str)) {
+      str = str.replace(r, '$1' + ',' + '$2');
+      
+}
+console.log(str)
   }
   drop(){
     alert('okk');
   }
-  ongo(){
-    // this.agGrid.columnApi.co
+  onRowEditingStarted(event: StartEditingCellParams){
     const firstCol = this.agGrid.columnApi.getAllDisplayedColumns()[2];
     this.agGrid.api.ensureColumnVisible(firstCol );
-    this.agGrid.api.setFocusedCell(0, firstCol);  
+    this.agGrid.api.setFocusedCell(event.rowIndex+1, firstCol); 
   }
   onCellValueChanged(event: any){
     const firstCol = this.agGrid.columnApi.getAllDisplayedColumns()[2];
-    this.agGrid.api.ensureColumnVisible(firstCol );
-    this.agGrid.api.setFocusedCell(event.rowIndex+1, firstCol);  
+    //  this.agGrid.api.startEditingCell({rowIndex:event.rowIndex+1,colKey:firstCol})
+    
   }
 
 }
