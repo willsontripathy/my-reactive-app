@@ -1,7 +1,9 @@
-import { CellPosition, ColDef, NavigateToNextCellParams } from '@ag-grid-community/core';
+import { CellClassParams, CellPosition, ColDef, NavigateToNextCellParams } from '@ag-grid-community/core';
+import { registerLocaleData } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AgGridAngular } from 'ag-grid-angular';
+import { BehaviorSubject } from 'rxjs';
 import { AppAbility } from './app-ability';
 import { CustomHeader } from './cust-header.componet';
 
@@ -12,6 +14,7 @@ import { CustomHeader } from './cust-header.componet';
 })
 export class AppComponent implements OnInit {
   title = 'my-reactive-app';
+  
   @ViewChild('agGrid') agGrid!: AgGridAngular;
   checkboxesData: any[] = [
     {name: "checkbox1", selected: false, disabled: false},
@@ -38,13 +41,19 @@ export class AppComponent implements OnInit {
     { headerName: 'Make', field: 'make', checkboxSelection: true },
     { headerName: 'Model', field: 'model' },
     {
-      headerName: 'Price', field: 'price', editable: false, checkboxSelection:false,
-      headerComponent: CustomHeader
-        
+      headerName: 'Price', field: 'price',
+      headerComponent: CustomHeader,
+      cellStyle: this.cellStyle
       
     }
   ];
-
+   cellStyle(params: CellClassParams) {
+    const  x = (params.column.getColDef().editable) ? 'red' :'yellow'
+    const color = 'red';
+    return {
+      backgroundColor: x,
+    };
+  }
 	rowData = [
 		{ make: 'Toyota', model: 'Celica', price: 35000 },
 		{ make: 'Ford', model: 'Mondeo', price: 32000 },
@@ -74,7 +83,10 @@ export class AppComponent implements OnInit {
       });
       (this.employeeForm.get('datas') as FormArray).push(group);
     })
-    
+    const r = RegExp(/^[0-9]+(,[0-9]+)*,?/);
+    const res = r.exec('99,999')
+    const str: string = '999999999999999999999999999';
+    console.log(str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"))
   }
   drop(){
     alert('okk');
